@@ -73,14 +73,13 @@ s = buffer.getvalue()
 st.text(s)
 
 # Comparar a distribuição dos clusters
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 plt.figure(figsize=(10, 6))
 sns.countplot(data=df, x='UF_Destino', label='População')
 sns.countplot(data=amostra, x='UF_Destino', label='Amostra')
-plt.legend()
+plt.legend(['População', 'Amostra'])  # Legenda corrigida
 plt.title('Distribuição dos Clusters na População e Amostra')
+plt.xticks(rotation=45, ha='right', fontsize=8)  # Rótulos do eixo X ajustados
 st.pyplot(plt)
 
 # Verificação da Representatividade
@@ -89,15 +88,15 @@ st.write("""
 Agora, vamos comparar a distribuição das tarifas na população (dados completos) e na amostra selecionada para garantir que a amostra seja representativa.
 """)
 
-plt.figure(figsize=(10, 6))
-sns.histplot(df['Tarifa'], label='População', kde=True, color='blue')
-sns.histplot(amostra['Tarifa'], label='Amostra', kde=True, color='orange')
-plt.legend()
-plt.title('Comparação entre População e Amostra', fontsize=16)
-plt.xlabel('Tarifa', fontsize=12)
-plt.ylabel('Frequência', fontsize=12)
-plt.grid(True, linestyle='--', alpha=0.7)
-st.pyplot(plt)
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.hist(df['Tarifa'], label='População', alpha=0.5, color='blue', density=True)
+ax.hist(amostra['Tarifa'], label='Amostra', alpha=0.5, color='orange', density=True)
+ax.legend()
+ax.set_title('Comparação entre População e Amostra', fontsize=16)
+ax.set_xlabel('Tarifa', fontsize=12)
+ax.set_ylabel('Frequência', fontsize=12)
+ax.grid(True, linestyle='--', alpha=0.7)
+st.pyplot(fig)
 
 # 3. Análise Exploratória Inicial
 st.header("3. Análise Exploratória Inicial")
@@ -111,13 +110,13 @@ st.write("""
 O histograma abaixo mostra a distribuição das tarifas aéreas. Ele nos permite visualizar a frequência com que diferentes faixas de tarifas ocorrem.
 """)
 
-plt.figure(figsize=(10, 6))
-sns.histplot(amostra['Tarifa'], kde=True, bins=30, color='#1f77b4')
-plt.title('Distribuição das Tarifas Aéreas', fontsize=16)
-plt.xlabel('Tarifa', fontsize=12)
-plt.ylabel('Frequência', fontsize=12)
-plt.grid(True, linestyle='--', alpha=0.7)
-st.pyplot(plt)
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.hist(amostra['Tarifa'], bins=30, color='#1f77b4', density=True) #density=true normaliza o histograma
+ax.set_title('Distribuição das Tarifas Aéreas', fontsize=16)
+ax.set_xlabel('Tarifa', fontsize=12)
+ax.set_ylabel('Frequência', fontsize=12)
+ax.grid(True, linestyle='--', alpha=0.7)
+st.pyplot(fig)
 
 # Medidas de Tendência Central
 st.subheader("3.2. Medidas de Tendência Central")
@@ -189,12 +188,12 @@ st.write(f"- **Limite Inferior**: {limite_inferior:.2f}")
 st.write(f"- **Limite Superior**: {limite_superior:.2f}")
 st.write(f"- **Número de Outliers**: {len(outliers)}")
 
-plt.figure(figsize=(10, 6))
-sns.boxplot(x=amostra['Tarifa'], color='#1f77b4')
-plt.title('Boxplot das Tarifas Aéreas', fontsize=16)
-plt.xlabel('Tarifa', fontsize=12)
-plt.grid(True, linestyle='--', alpha=0.7)
-st.pyplot(plt)
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.boxplot(amostra['Tarifa'])
+ax.set_title('Boxplot das Tarifas Aéreas', fontsize=16)
+ax.set_xlabel('Tarifa', fontsize=12)
+ax.grid(True, linestyle='--', alpha=0.7)
+st.pyplot(fig)
 
 # Análise da exploração inicial
 st.write(f"""
@@ -233,14 +232,13 @@ A correlação de Pearson mede a força e a direção da relação linear entre 
 """)
 
 # Gráfico de Dispersão
-plt.figure(figsize=(10, 6))
-sns.scatterplot(data=amostra, x='Dist_Km', y='Tarifa', hue='Região_Destino', palette='colorblind')
-plt.title('Relação entre Tarifa e Distância', fontsize=16)
-plt.xlabel('Distância (Km)', fontsize=12)
-plt.ylabel('Tarifa', fontsize=12)
-plt.legend(title='Região de Destino')
-plt.grid(True, linestyle='--', alpha=0.7)
-st.pyplot(plt)
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.scatter(amostra['Dist_Km'], amostra['Tarifa'])
+ax.set_title('Relação entre Tarifa e Distância', fontsize=16)
+ax.set_xlabel('Distância (Km)', fontsize=12)
+ax.set_ylabel('Tarifa', fontsize=12)
+ax.grid(True, linestyle='--', alpha=0.7)
+st.pyplot(fig)
 
 # Análise dos achados de Covariância e Correlação
 st.write(f"""
