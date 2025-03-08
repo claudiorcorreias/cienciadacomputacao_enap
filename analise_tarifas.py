@@ -1,4 +1,4 @@
-# Executando o Streamlit em um Servidor Local ou usando o ngrok para expor o Streamlit localmente e acessá-lo via Colab:
+# Executando o Streamlit via github
 
 # Importação das bibliotecas
 import pandas as pd
@@ -111,13 +111,13 @@ st.write("""
 O histograma abaixo mostra a distribuição das tarifas aéreas. Ele nos permite visualizar a frequência com que diferentes faixas de tarifas ocorrem.
 """)
 
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.hist(amostra['Tarifa'], bins=30, color='#1f77b4', density=True) #density=true normaliza o histograma
-ax.set_title('Distribuição das Tarifas Aéreas', fontsize=16)
-ax.set_xlabel('Tarifa', fontsize=12)
-ax.set_ylabel('Frequência', fontsize=12)
-ax.grid(True, linestyle='--', alpha=0.7)
-st.pyplot(fig)
+plt.figure(figsize=(10, 6))
+sns.histplot(amostra['Tarifa'], bins=30, color='#1f77b4', edgecolor='black', kde=True)
+plt.title('Distribuição das Tarifas Aéreas com Bordas e KDE', fontsize=16)
+plt.xlabel('Tarifa', fontsize=12)
+plt.ylabel('Frequência', fontsize=12)
+plt.grid(True, linestyle='--', alpha=0.7)
+st.pyplot(plt)
 
 # Medidas de Tendência Central
 st.subheader("3.2. Medidas de Tendência Central")
@@ -233,13 +233,14 @@ A correlação de Pearson mede a força e a direção da relação linear entre 
 """)
 
 # Gráfico de Dispersão
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.scatter(amostra['Dist_Km'], amostra['Tarifa'])
-ax.set_title('Relação entre Tarifa e Distância', fontsize=16)
-ax.set_xlabel('Distância (Km)', fontsize=12)
-ax.set_ylabel('Tarifa', fontsize=12)
-ax.grid(True, linestyle='--', alpha=0.7)
-st.pyplot(fig)
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=amostra, x='Dist_Km', y='Tarifa', hue='Região_Destino', palette='colorblind', legend='full')
+plt.title('Relação entre Tarifa e Distância', fontsize=16)
+plt.xlabel('Distância (Km)', fontsize=12)
+plt.ylabel('Tarifa', fontsize=12)
+plt.legend(title='Região de Destino')
+plt.grid(True, linestyle='--', alpha=0.7)
+st.pyplot(plt)
 
 # Análise dos achados de Covariância e Correlação
 st.write(f"""
