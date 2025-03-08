@@ -190,9 +190,9 @@ st.write(f"- **Limite Superior**: {limite_superior:.2f}")
 st.write(f"- **Número de Outliers**: {len(outliers)}")
 
 plt.figure(figsize=(10, 6))
-sns.boxplot(y=amostra['Tarifa'], color='#1f77b4')  # Inversão dos eixos x e y
+sns.boxplot(x=amostra['Tarifa'], color='#1f77b4')  # Tarifas no eixo x
 plt.title('Boxplot das Tarifas Aéreas', fontsize=16)
-plt.ylabel('Tarifa', fontsize=12)  # Alteração do rótulo do eixo y
+plt.xlabel('Tarifa', fontsize=12)  # Rótulo do eixo x
 plt.grid(True, linestyle='--', alpha=0.7)
 st.pyplot(plt)
 
