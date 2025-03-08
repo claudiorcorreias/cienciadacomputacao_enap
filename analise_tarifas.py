@@ -29,7 +29,7 @@ Vamos começar carregando a base de dados de tarifas aéreas. O conjunto de dado
 """)
 
 # Caminho do arquivo no Google Drive
-caminho = 'C:/Users/claud/Documents/Projetos CD e IA/df_projeto_estatistica.csv'
+caminho = 'df_projeto_estatistica.csv'
 df = pd.read_csv(caminho, encoding='UTF-8', sep=',') 
 
 # Converter a coluna 'Data' para datetime
