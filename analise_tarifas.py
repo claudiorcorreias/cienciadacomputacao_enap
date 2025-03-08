@@ -88,15 +88,16 @@ st.write("""
 Agora, vamos comparar a distribuição das tarifas na população (dados completos) e na amostra selecionada para garantir que a amostra seja representativa.
 """)
 
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.hist(df['Tarifa'], label='População', alpha=0.5, color='blue', density=True)
-ax.hist(amostra['Tarifa'], label='Amostra', alpha=0.5, color='orange', density=True)
-ax.legend()
-ax.set_title('Comparação entre População e Amostra', fontsize=16)
-ax.set_xlabel('Tarifa', fontsize=12)
-ax.set_ylabel('Frequência', fontsize=12)
-ax.grid(True, linestyle='--', alpha=0.7)
-st.pyplot(fig)
+plt.figure(figsize=(10, 6))
+sns.histplot(df['Tarifa'], label='População', kde=True, color='blue', alpha=0.5)  # Adicionado alpha para transparência
+sns.histplot(amostra['Tarifa'], label='Amostra', kde=True, color='orange', alpha=0.5)  # Adicionado alpha para transparência
+plt.legend()
+plt.title('Comparação entre População e Amostra', fontsize=16)
+plt.xlabel('Tarifa', fontsize=12)
+plt.ylabel('Frequência', fontsize=12)
+plt.grid(True, linestyle='--', alpha=0.7)
+st.pyplot(plt)
+
 
 # 3. Análise Exploratória Inicial
 st.header("3. Análise Exploratória Inicial")
